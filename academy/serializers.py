@@ -39,7 +39,7 @@ class CourseSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Course
-        fields = ['id', 'name_uz', 'name_en', 'name_ru', 'description_uz', 'description_en', 'description_ru', 'about_uz', 'about_en', 'about_ru', 'image']
+        fields = "__all__"
         
     # def get_image(self, obj):
     #     if obj.image:
@@ -82,5 +82,11 @@ class FAQSerializer(serializers.ModelSerializer):
 class FileSerializer(serializers.ModelSerializer):
     class Meta:
         model = File
+        fields = '__all__'
+
+
+class AboutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = About
         fields = '__all__'
 

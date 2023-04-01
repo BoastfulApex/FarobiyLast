@@ -21,6 +21,31 @@ class CategoryView(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     
+    def list(self, request, *args, **kwargs):
+        courses = self.get_queryset()   
+        data = []
+        for course in courses:
+            file = []
+            if course.image:
+                file = {
+                    "id": course.image.id,
+                    "file": course.image.fileUrl
+                }
+            else:
+                file = []
+            d = {
+                "id": course.id,
+                "name_uz": course.name_uz,
+                "name_en": course.name_en,
+                "name_ru": course.name_ru,
+                "description_uz": course.description_uz,
+                "description_en": course.description_en,
+                "description_ru": course.description_ru,
+                "image": file
+            }
+            data.append(d)
+                 
+        return Response(data)    
 
 # class SubCategoryView(viewsets.ModelViewSet):
 #     queryset = SubCategory.objects.all()
@@ -47,17 +72,62 @@ class SubCategoryView(viewsets.ModelViewSet):
         category_id = request.GET.get('category_id')
         if category_id:
             subcategories = self.get_queryset().filter(category__id=category_id)
-            serializer = self.get_serializer(subcategories, many=True)
-            return Response(serializer.data)            
+            data = []
+            for subcategory in subcategories:
+                file = []
+                if subcategory.image:
+                    file = {
+                        "id": subcategory.image.id,
+                        "file": subcategory.image.fileUrl
+                    }
+                else:
+                    file = []
+                d = {
+                    "id": subcategory.id,
+                    "name_uz": subcategory.name_uz,
+                    "name_en": subcategory.name_en,
+                    "name_ru": subcategory.name_ru,
+                    "description_uz": subcategory.description_uz,
+                    "description_en": subcategory.description_en,
+                    "description_ru": subcategory.description_ru,
+                    "category": subcategory.category.id,
+                    "image": file
+                }
+                data.append(d)
+                    
+            return Response(data)    
         else:
-            subcategories = self.get_queryset().all()
-            serializer = self.get_serializer(subcategories, many=True)
-            return Response(serializer.data)
+            data = []
+            subcategories = SubCategory.objects.all()
+            for subcategory in subcategories:
+                file = []
+                
+                if subcategory.image:
+                    file = {
+                        "id": subcategory.image.id,
+                        "file": subcategory.image.fileUrl
+                    }
+                else:
+                    file = []
+                d = {
+                    "id": subcategory.id,
+                    "name_uz": subcategory.name_uz,
+                    "name_en": subcategory.name_en,
+                    "name_ru": subcategory.name_ru,
+                    "description_uz": subcategory.description_uz,
+                    "description_en": subcategory.description_en,
+                    "description_ru": subcategory.description_ru,
+                    "category": subcategory.category.id,
+                    "image": file
+                }
+                data.append(d)
+                    
+            return Response(data)    
 
 class CourseView(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
-    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     
     
     def list(self, request, *args, **kwargs):
@@ -85,6 +155,7 @@ class CourseView(viewsets.ModelViewSet):
                     "about_uz": course.about_uz,
                     "about_en": course.about_en,
                     "about_ru": course.about_ru,
+                    "sub_category": course.sub_category,
                     "image": file
                 }
                 data.append(d)
@@ -113,6 +184,7 @@ class CourseView(viewsets.ModelViewSet):
                     "about_uz": course.about_uz,
                     "about_en": course.about_en,
                     "about_ru": course.about_ru,
+                    "sub_category": course.sub_category,
                     "image": file
                 }
                 data.append(d)
@@ -262,3 +334,34 @@ class FileView(viewsets.ModelViewSet):
                 "file": file.fileUrl
             }
             return Response(data)
+        
+
+   
+class AboutView(viewsets.ModelViewSet):
+    queryset = About.objects.all()
+    serializer_class = AboutSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    
+    def list(self, request, *args, **kwargs):
+        abouts = self.get_queryset()   
+        data = []
+        for about in abouts:
+            file = []
+            if about.image:
+                file = {
+                    "id": about.image.id,
+                    "file": about.image.fileUrl
+                }
+            else:
+                file = []
+            d = {
+                "id": about.id,
+                "about_uz": about.about_uz,
+                "about_en": about.about_en,
+                "about_ru": about.about_ru,
+                "image": file
+            }
+            data.append(d)
+                 
+        return Response(data)    
+

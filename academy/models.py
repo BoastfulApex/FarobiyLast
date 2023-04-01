@@ -18,7 +18,7 @@ class Category(models.Model):
     description_uz = models.TextField(max_length=200000, null=True, blank=True)
     description_ru = models.TextField(max_length=200000, null=True, blank=True)
     description_en = models.TextField(max_length=200000, null=True, blank=True)
-    # image = models.ForeignKey('academy.File', on_delete=models.SET_NULL, null=True)
+    image = models.ForeignKey('academy.File', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.name_uz
@@ -32,7 +32,7 @@ class SubCategory(models.Model):
     description_uz = models.TextField(max_length=200000, null=True, blank=True)
     description_ru = models.TextField(max_length=200000, null=True, blank=True)
     description_en = models.TextField(max_length=200000, null=True, blank=True)
-    # image = models.ForeignKey('academy.File', on_delete=models.SET_NULL, null=True)
+    image = models.ForeignKey('academy.File', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.name_uz
@@ -63,6 +63,7 @@ class Teacher(models.Model):
     description_ru = models.TextField(max_length=200000, null=True, blank=True)
     description_en = models.TextField(max_length=200000, null=True, blank=True)
     image = models.ForeignKey('academy.File', on_delete=models.SET_NULL, null=True, blank=True)
+    icon = models.ForeignKey('academy.File', on_delete=models.SET_NULL, null=True, blank=True)
     
     def __str__(self):
         return self.name_uz
@@ -94,6 +95,16 @@ class FAQ(models.Model):
         return self.question_uz
     
 
+class About(models.Model):
+    about_uz = models.TextField(max_length=200000, null=True, blank=True)
+    about_ru = models.TextField(max_length=200000, null=True, blank=True)
+    about_en = models.TextField(max_length=200000, null=True, blank=True)
+    image = models.ForeignKey('academy.File', on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.name_uz
+
+
 class File(models.Model):
     file = models.FileField(null=True, blank=True)
     
@@ -107,3 +118,4 @@ class File(models.Model):
         
     def __str__(self):
         return str(self.id)
+
