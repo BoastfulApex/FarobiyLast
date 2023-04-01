@@ -93,7 +93,7 @@ class FAQ(models.Model):
     
     def __str__(self):
         return self.question_uz
-    
+
 
 class About(models.Model):
     about_uz = models.TextField(max_length=200000, null=True, blank=True)
