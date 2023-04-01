@@ -19,7 +19,7 @@ class SliderSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Slider
-        fields = ['id', 'name_uz', 'name_en', 'name_ru', 'description_uz', 'description_en', 'description_ru', 'image']
+        fields = '__all__'
         
         
 class CategorySerializer(serializers.ModelSerializer):
@@ -61,7 +61,7 @@ class TeacherSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Teacher
-        fields = ['id', 'name_uz', 'name_en', 'name_ru', 'description_uz', 'description_en', 'description_ru', 'image']
+        fields = ['id', 'name_uz', 'name_en', 'name_ru', 'description_uz', 'description_en', 'description_ru', 'image', 'icone']
         
     # def get_image(self, obj):
     #     if obj.image:

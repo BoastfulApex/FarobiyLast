@@ -11,3 +11,4 @@ router.register(r'course_descriptions', CourseDescriptionView, basename='course_
 router.register(r'teachers', TeacherView, basename='teachers')
 router.register(r'faqs', FAQView, basename='faqs')
 router.register(r'files', FileView, basename='files')
+router.register(r'abouts', AboutView, basename='abouts')
