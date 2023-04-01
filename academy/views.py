@@ -280,13 +280,18 @@ class TeacherView(viewsets.ModelViewSet):
         data = []
         for teacher in teachers:
             file = []
+            icn = []
+            if teacher.icon:
+                icn = {
+                    "id": teacher.image.id,
+                    "file": teacher.image.fileUrl
+                }
+                
             if teacher.image:
                 file = {
                     "id": teacher.image.id,
                     "file": teacher.image.fileUrl
                 }
-            else:
-                file = []
             d = {
                 "id": teacher.id,
                 "name_uz": teacher.name_uz,
@@ -295,7 +300,8 @@ class TeacherView(viewsets.ModelViewSet):
                 "description_uz": teacher.description_uz,
                 "description_en": teacher.description_en,
                 "description_ru": teacher.description_ru,
-                "image": file
+                "image": file,
+                "icon": icn
             }
             data.append(d)
                  

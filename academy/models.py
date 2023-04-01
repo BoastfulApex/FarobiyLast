@@ -62,8 +62,8 @@ class Teacher(models.Model):
     description_uz = models.TextField(max_length=200000, null=True, blank=True)
     description_ru = models.TextField(max_length=200000, null=True, blank=True)
     description_en = models.TextField(max_length=200000, null=True, blank=True)
-    image = models.ForeignKey('academy.File', on_delete=models.SET_NULL, null=True, blank=True)
-    icon = models.ForeignKey('academy.File', on_delete=models.SET_NULL, null=True, blank=True)
+    image = models.ForeignKey('academy.File', on_delete=models.SET_NULL, null=True, blank=True, related_name='teacher_image')
+    icon = models.ForeignKey('academy.File', on_delete=models.SET_NULL, null=True, blank=True, related_name='teacher_icon')
     
     def __str__(self):
         return self.name_uz
