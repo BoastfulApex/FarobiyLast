@@ -109,6 +109,9 @@ class SubCategoryView(viewsets.ModelViewSet):
                     }
                 else:
                     file = []
+                cat = []
+                if subcategory.category is not None:
+                    cat = subcategory.category.id
                 d = {
                     "id": subcategory.id,
                     "name_uz": subcategory.name_uz,
@@ -117,7 +120,7 @@ class SubCategoryView(viewsets.ModelViewSet):
                     "description_uz": subcategory.description_uz,
                     "description_en": subcategory.description_en,
                     "description_ru": subcategory.description_ru,
-                    "category": subcategory.category.id,
+                    "category": subcategory.category.cat,
                     "image": file
                 }
                 data.append(d)
@@ -184,7 +187,7 @@ class CourseView(viewsets.ModelViewSet):
                     "about_uz": course.about_uz,
                     "about_en": course.about_en,
                     "about_ru": course.about_ru,
-                    "sub_category": course.sub_category,
+                    "sub_category": course.sub_category.id,
                     "image": file
                 }
                 data.append(d)
@@ -283,8 +286,8 @@ class TeacherView(viewsets.ModelViewSet):
             icn = []
             if teacher.icon:
                 icn = {
-                    "id": teacher.image.id,
-                    "file": teacher.image.fileUrl
+                    "id": teacher.ocon.id,
+                    "file": teacher.icon.fileUrl
                 }
                 
             if teacher.image:
@@ -317,7 +320,7 @@ class FAQView(viewsets.ModelViewSet):
 class FileView(viewsets.ModelViewSet):
     queryset = File.objects.all()
     serializer_class = FileSerializer
-    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     
     def create(self, request, *args, **kwargs):
         image_id = self.request.query_params.get('id')
