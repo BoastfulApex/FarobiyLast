@@ -28,7 +28,7 @@ class SubCategory(models.Model):
     name_uz = models.CharField(max_length=20000, null=True, blank=True)
     name_ru = models.CharField(max_length=20000, null=True, blank=True)
     name_en = models.CharField(max_length=20000, null=True, blank=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
     description_uz = models.TextField(max_length=200000, null=True, blank=True)
     description_ru = models.TextField(max_length=200000, null=True, blank=True)
     description_en = models.TextField(max_length=200000, null=True, blank=True)
@@ -48,7 +48,7 @@ class Course(models.Model):
     about_uz = models.TextField(max_length=200000, null=True, blank=True)
     about_ru = models.TextField(max_length=200000, null=True, blank=True)
     about_en = models.TextField(max_length=200000, null=True, blank=True)
-    sub_category = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
+    sub_category = models.ForeignKey(SubCategory, on_delete=models.CASCADE, null=True)
     image = models.ForeignKey('academy.File', on_delete=models.SET_NULL, null=True, blank=True)
     
     def __str__(self):
