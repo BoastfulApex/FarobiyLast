@@ -21,25 +21,31 @@ from knox.views import LogoutView, LogoutAllView
 from django.conf.urls.static import static
 from .settings import STATIC_URL, STATIC_ROOT, MEDIA_URL, MEDIA_ROOT
 from rest_framework.schemas import get_schema_view
-from django.views.generic import TemplateView
 
+
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Farobiy Api",
+        default_version='v1'),
+    public=True,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('documentation/', TemplateView.as_view(
-        template_name='swagger-ui.html',
-        extra_context={'schema_url':'openapi-schema'}
-    ), name='swagger-ui'),
-    path('openapi', get_schema_view(
-        title="Farobiy",
-        description="API for all things ...",
-        version="1.0.0"
-    ), name='openapi-schema'),
     path('api/', include(router.urls)),
     path('auth/login/', LoginView.as_view(), name='login'),
     path('auth/logout/', LogoutView.as_view(), name='logout'),
     path('auth/logoutall/', LogoutAllView.as_view(), name='logoutall'),
-    ]
+
+    path('documentation/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+
+]
 
 urlpatterns += static(STATIC_URL, document_root=STATIC_ROOT)
 urlpatterns += static(MEDIA_URL, document_root=MEDIA_ROOT)
